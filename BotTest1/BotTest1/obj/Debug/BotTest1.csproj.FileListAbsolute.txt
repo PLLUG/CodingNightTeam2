@@ -1,0 +1,9 @@
+C:\Users\dmitr_000\Documents\Visual Studio 2017\Projects\BotTest\CodingNightTeam2\BotTest1\BotTest1\bin\Debug\BotTest1.exe.config
+C:\Users\dmitr_000\Documents\Visual Studio 2017\Projects\BotTest\CodingNightTeam2\BotTest1\BotTest1\bin\Debug\BotTest1.exe
+C:\Users\dmitr_000\Documents\Visual Studio 2017\Projects\BotTest\CodingNightTeam2\BotTest1\BotTest1\bin\Debug\BotTest1.pdb
+C:\Users\dmitr_000\Documents\Visual Studio 2017\Projects\BotTest\CodingNightTeam2\BotTest1\BotTest1\obj\Debug\BotTest1.csprojResolveAssemblyReference.cache
+C:\Users\dmitr_000\Documents\Visual Studio 2017\Projects\BotTest\CodingNightTeam2\BotTest1\BotTest1\obj\Debug\BotTest1.Main.resources
+C:\Users\dmitr_000\Documents\Visual Studio 2017\Projects\BotTest\CodingNightTeam2\BotTest1\BotTest1\obj\Debug\BotTest1.Properties.Resources.resources
+C:\Users\dmitr_000\Documents\Visual Studio 2017\Projects\BotTest\CodingNightTeam2\BotTest1\BotTest1\obj\Debug\BotTest1.csproj.GenerateResource.Cache
+C:\Users\dmitr_000\Documents\Visual Studio 2017\Projects\BotTest\CodingNightTeam2\BotTest1\BotTest1\obj\Debug\BotTest1.exe
+C:\Users\dmitr_000\Documents\Visual Studio 2017\Projects\BotTest\CodingNightTeam2\BotTest1\BotTest1\obj\Debug\BotTest1.pdb
