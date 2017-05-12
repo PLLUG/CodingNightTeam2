@@ -7,3 +7,10 @@ C:\Users\dmitr_000\Documents\Visual Studio 2017\Projects\BotTest\CodingNightTeam
 C:\Users\dmitr_000\Documents\Visual Studio 2017\Projects\BotTest\CodingNightTeam2\BotTest1\BotTest1\obj\Debug\BotTest1.csproj.GenerateResource.Cache
 C:\Users\dmitr_000\Documents\Visual Studio 2017\Projects\BotTest\CodingNightTeam2\BotTest1\BotTest1\obj\Debug\BotTest1.exe
 C:\Users\dmitr_000\Documents\Visual Studio 2017\Projects\BotTest\CodingNightTeam2\BotTest1\BotTest1\obj\Debug\BotTest1.pdb
+C:\Users\dmitr_000\Documents\Visual Studio 2017\Projects\BotTest\CodingNightTeam2\BotTest1\BotTest1\bin\Debug\Newtonsoft.Json.dll
+C:\Users\dmitr_000\Documents\Visual Studio 2017\Projects\BotTest\CodingNightTeam2\BotTest1\BotTest1\bin\Debug\System.Net.Http.Formatting.dll
+C:\Users\dmitr_000\Documents\Visual Studio 2017\Projects\BotTest\CodingNightTeam2\BotTest1\BotTest1\bin\Debug\Telegram.Bot.dll
+C:\Users\dmitr_000\Documents\Visual Studio 2017\Projects\BotTest\CodingNightTeam2\BotTest1\BotTest1\bin\Debug\Newtonsoft.Json.xml
+C:\Users\dmitr_000\Documents\Visual Studio 2017\Projects\BotTest\CodingNightTeam2\BotTest1\BotTest1\bin\Debug\System.Net.Http.Formatting.xml
+C:\Users\dmitr_000\Documents\Visual Studio 2017\Projects\BotTest\CodingNightTeam2\BotTest1\BotTest1\bin\Debug\Telegram.Bot.xml
+C:\Users\dmitr_000\Documents\Visual Studio 2017\Projects\BotTest\CodingNightTeam2\BotTest1\BotTest1\bin\Debug\ApiAiSDK.dll
