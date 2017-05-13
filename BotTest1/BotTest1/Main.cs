@@ -20,10 +20,24 @@ namespace BotTest1
         TelegramBotClient tbc;
         ApiAi apiai;
 
+        Dictionary<string, string> emotionFilesDB;
+
         public Main()
         {
+
             InitializeComponent();
-            tbc = new TelegramBotClient("341492989:AAHJxIs7mf52lhqlilUuAlIdFhP1qt-iipA");
+
+            emotionFilesDB = new Dictionary<string, string>();
+            emotionFilesDB.Add("Angry", @"../../samples/Angry.mp3");
+            emotionFilesDB.Add("Bad", @"../../samples/Bad.mp3");
+            emotionFilesDB.Add("Good", @"../../samples/Good.mp3");
+            emotionFilesDB.Add("Indifferent", @"../../samples/Indifferent.mp3");
+            emotionFilesDB.Add("Lovestruck", @"../../samples/Lovestruck.mp3");
+            emotionFilesDB.Add("OnDrugs", @"../../samples/OnDrugs.mp3");
+            emotionFilesDB.Add("unit-temperature", @"../../samples/unit-temperature.mp3");
+
+            tbc = new TelegramBotClient("334375345:AAFZmig5TDYRgGM586kFTqtd7CRG5IyEjDg");
+
             tbTimer.Start();
         }
 
@@ -38,6 +52,7 @@ namespace BotTest1
 
         private void Tbc_OnMessage(object sender, Telegram.Bot.Args.MessageEventArgs e)
         {
+
             var response = apiai.TextRequest(e.Message.Text);
 
             clientMsgLog = e.Message.Chat.FirstName + ": " + e.Message.Text + "\r\n";
@@ -56,6 +71,7 @@ namespace BotTest1
                 audioFile.Filename = url;
                 Telegram.Bot.Types.Message message = await tbc.SendAudioAsync(chatId, audioFile, 10, "performer", "Title");
             }       
+
         }
 
         private void tbTimer_Tick(object sender, EventArgs e)
