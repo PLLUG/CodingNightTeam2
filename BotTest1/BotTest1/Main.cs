@@ -28,15 +28,14 @@ namespace BotTest1
             InitializeComponent();
 
             emotionFilesDB = new Dictionary<string, string>();
-            emotionFilesDB.Add("Angry", @"../../samples/Angry.mp3");
-            emotionFilesDB.Add("Bad", @"../../samples/Bad.mp3");
-            emotionFilesDB.Add("Good", @"../../samples/Good.mp3");
-            emotionFilesDB.Add("Indifferent", @"../../samples/Indifferent.mp3");
-            emotionFilesDB.Add("Lovestruck", @"../../samples/Lovestruck.mp3");
-            emotionFilesDB.Add("OnDrugs", @"../../samples/OnDrugs.mp3");
-            emotionFilesDB.Add("unit-temperature", @"../../samples/unit-temperature.mp3");
+            emotionFilesDB.Add("AngryMood", @"../../samples/Angry.mp3");
+            emotionFilesDB.Add("BadMood", @"../../samples/Bad.mp3");
+            emotionFilesDB.Add("GoodMood", @"../../samples/Good.mp3");
+            emotionFilesDB.Add("TrueNeutralMood", @"../../samples/TrueNeutralMood.mp3");
+            emotionFilesDB.Add("LovestruckMood", @"../../samples/Lovestruck.mp3");
+            emotionFilesDB.Add("OnDrugsMood", @"../../samples/OnDrugs.mp3");
 
-            tbc = new TelegramBotClient("334375345:AAFZmig5TDYRgGM586kFTqtd7CRG5IyEjDg");
+            tbc = new TelegramBotClient("341492989:AAHJxIs7mf52lhqlilUuAlIdFhP1qt-iipA");
 
             tbTimer.Start();
         }
@@ -58,10 +57,11 @@ namespace BotTest1
             clientMsgLog = e.Message.Chat.FirstName + ": " + e.Message.Text + "\r\n";
             botMsgLog = "Bot: " + response.Result.Fulfillment.Speech + "\r\n";
 
-            SendAudioFile(@"../../samples/2.mp3", e.Message.Chat.Id);
+            string mood = emotionFilesDB[GetMood(response)];
+            SendAudioFile(mood, e.Message.Chat.Id, mood);
         }
 
-        private async void SendAudioFile(string url, long chatId)
+        private async void SendAudioFile(string url, long chatId, string title)
         {
             Telegram.Bot.Types.FileToSend audioFile = new Telegram.Bot.Types.FileToSend();
 
@@ -69,9 +69,24 @@ namespace BotTest1
             {
                 audioFile.Content = stream;
                 audioFile.Filename = url;
-                Telegram.Bot.Types.Message message = await tbc.SendAudioAsync(chatId, audioFile, 10, "performer", "Title");
+                Telegram.Bot.Types.Message message = await tbc.SendAudioAsync(chatId, audioFile, 10, "performer", title);
             }       
 
+        }
+
+        private string GetMood(AIResponse response)
+        {
+            string mood = "";
+
+            foreach(var param in response.Result.Parameters)
+            {
+                if(!String.IsNullOrEmpty(param.Value as string))
+                {
+                    mood = param.Key as string;
+                }
+            }
+
+            return mood;
         }
 
         private void tbTimer_Tick(object sender, EventArgs e)
