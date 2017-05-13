@@ -16,11 +16,11 @@ namespace BotTest1
     public partial class Main : Form
     {
         string clientMsgLog = "";
-        string botMsgLog = "";
         TelegramBotClient tbc;
         ApiAi apiai;
 
         Dictionary<string, string> emotionFilesDB;
+        Dictionary<string, string> emotionMsgsDB;
 
         public Main()
         {
@@ -35,18 +35,29 @@ namespace BotTest1
             emotionFilesDB.Add("LovestruckMood", @"../../samples/Lovestruck.mp3");
             emotionFilesDB.Add("OnDrugsMood", @"../../samples/OnDrugs.mp3");
 
-            tbc = new TelegramBotClient("341492989:AAHJxIs7mf52lhqlilUuAlIdFhP1qt-iipA");
-
-            tbTimer.Start();
+            emotionMsgsDB = new Dictionary<string, string>();
+            emotionMsgsDB.Add("AngryMood", "This should calm you down");
+            emotionMsgsDB.Add("BadMood", "Cheer up");
+            emotionMsgsDB.Add("GoodMood", "Remember these happy times");
+            emotionMsgsDB.Add("TrueNeutralMood", "Not much is going on, huh?");
+            emotionMsgsDB.Add("LovestruckMood", "This will ignite your passion");
+            emotionMsgsDB.Add("OnDrugsMood", "WOAH THATS DEEEEEEEEEEP DUDE");
         }
 
         private void Main_Load(object sender, EventArgs e)
         {
             var config = new AIConfiguration("90861bda9ce9466791b4b49321460248", SupportedLanguage.English);
             apiai = new ApiAi(config);
+        }
+
+        private void tokenButton_Click(object sender, EventArgs e)
+        {
+            tbc = new TelegramBotClient(tokenTextBox.Text);
+            tbTimer.Start();
 
             tbc.OnMessage += Tbc_OnMessage;
             tbc.StartReceiving();
+            messageBox.Text = "Bot started\r\n";
         }
 
         private void Tbc_OnMessage(object sender, Telegram.Bot.Args.MessageEventArgs e)
@@ -55,7 +66,7 @@ namespace BotTest1
             var response = apiai.TextRequest(e.Message.Text);
 
             clientMsgLog = e.Message.Chat.FirstName + ": " + e.Message.Text + "\r\n";
-            botMsgLog = "Bot: " + response.Result.Fulfillment.Speech + "\r\n";
+            clientMsgLog += "Bot: " + response.Result.Fulfillment.Speech + "\r\n";
 
             if(response.Result.Action == "input.welcome")
             {
@@ -64,8 +75,10 @@ namespace BotTest1
 
             else
             {
-                string mood = emotionFilesDB[GetMood(response)];
-                SendAudioFile(mood, e.Message.Chat.Id, mood);
+                string moodIdx = GetMood(response);
+
+                tbc.SendTextMessageAsync(e.Message.Chat.Id, emotionMsgsDB[moodIdx]);
+                SendAudioFile(emotionFilesDB[moodIdx], e.Message.Chat.Id, emotionFilesDB[moodIdx]);
             }
         }
 
@@ -93,7 +106,6 @@ namespace BotTest1
                     mood = param.Key as string;
                 }
             }
-
             return mood;
         }
 
@@ -104,12 +116,7 @@ namespace BotTest1
                 messageBox.Text += clientMsgLog;
                 clientMsgLog = "";
             }
-
-            if (botMsgLog.Length > 0)
-            {
-                messageBox.Text += botMsgLog;
-                botMsgLog = "";
-            }
         }
+
     }
 }
