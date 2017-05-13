@@ -23,7 +23,7 @@ namespace BotTest1
         public Main()
         {
             InitializeComponent();
-            tbc = new TelegramBotClient("391813246:AAEDCf0OVWN0fZJjq-PIRZbM_6Q_7_7330s");
+            tbc = new TelegramBotClient("341492989:AAHJxIs7mf52lhqlilUuAlIdFhP1qt-iipA");
             tbTimer.Start();
         }
 
@@ -38,17 +38,24 @@ namespace BotTest1
 
         private void Tbc_OnMessage(object sender, Telegram.Bot.Args.MessageEventArgs e)
         {
-            //if (e.Message != null)
-            //{
-            //    messageBox.Text += e.Message.Text + "\n";
-            //}
-            
-            clientMsgLog = e.Message.Chat.FirstName + ": " + e.Message.Text + "\r\n";
-
             var response = apiai.TextRequest(e.Message.Text);
-            tbc.SendTextMessageAsync(e.Message.Chat.Id, response.Result.Fulfillment.Speech);
+
+            clientMsgLog = e.Message.Chat.FirstName + ": " + e.Message.Text + "\r\n";
             botMsgLog = "Bot: " + response.Result.Fulfillment.Speech + "\r\n";
-            //throw new NotImplementedException();
+
+            SendAudioFile(@"../../samples/2.mp3", e.Message.Chat.Id);
+        }
+
+        private async void SendAudioFile(string url, long chatId)
+        {
+            Telegram.Bot.Types.FileToSend audioFile = new Telegram.Bot.Types.FileToSend();
+
+            using (var stream = System.IO.File.Open(url, System.IO.FileMode.Open, System.IO.FileAccess.Read, System.IO.FileShare.Read))
+            {
+                audioFile.Content = stream;
+                audioFile.Filename = url;
+                Telegram.Bot.Types.Message message = await tbc.SendAudioAsync(chatId, audioFile, 10, "performer", "Title");
+            }       
         }
 
         private void tbTimer_Tick(object sender, EventArgs e)
