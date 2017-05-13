@@ -57,8 +57,16 @@ namespace BotTest1
             clientMsgLog = e.Message.Chat.FirstName + ": " + e.Message.Text + "\r\n";
             botMsgLog = "Bot: " + response.Result.Fulfillment.Speech + "\r\n";
 
-            string mood = emotionFilesDB[GetMood(response)];
-            SendAudioFile(mood, e.Message.Chat.Id, mood);
+            if(response.Result.Action == "input.welcome")
+            {
+                tbc.SendTextMessageAsync(e.Message.Chat.Id, response.Result.Fulfillment.Speech);
+            }
+
+            else
+            {
+                string mood = emotionFilesDB[GetMood(response)];
+                SendAudioFile(mood, e.Message.Chat.Id, mood);
+            }
         }
 
         private async void SendAudioFile(string url, long chatId, string title)
@@ -76,7 +84,7 @@ namespace BotTest1
 
         private string GetMood(AIResponse response)
         {
-            string mood = "";
+            string mood = "GoodMood";
 
             foreach(var param in response.Result.Parameters)
             {
