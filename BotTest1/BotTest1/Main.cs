@@ -66,20 +66,28 @@ namespace BotTest1
             var response = apiai.TextRequest(e.Message.Text);
 
             clientMsgLog = e.Message.Chat.FirstName + ": " + e.Message.Text + "\r\n";
-            clientMsgLog += "Bot: " + response.Result.Fulfillment.Speech + "\r\n";
+            
 
-            if(response.Result.Action == "input.welcome")
-            {
-                tbc.SendTextMessageAsync(e.Message.Chat.Id, response.Result.Fulfillment.Speech);
-            }
+            //if(response.Result.Action == "input.welcome")
+            //{
+                
+            //}
 
-            else
-            {
+            //else
+            //{
                 string moodIdx = GetMood(response);
-
-                tbc.SendTextMessageAsync(e.Message.Chat.Id, emotionMsgsDB[moodIdx]);
-                SendAudioFile(emotionFilesDB[moodIdx], e.Message.Chat.Id, emotionFilesDB[moodIdx]);
-            }
+                if (moodIdx != null)
+                {
+                    clientMsgLog += "Bot(mood message): " + moodIdx + "\r\n";
+                    tbc.SendTextMessageAsync(e.Message.Chat.Id, emotionMsgsDB[moodIdx]);
+                    SendAudioFile(emotionFilesDB[moodIdx], e.Message.Chat.Id, emotionFilesDB[moodIdx]);
+                }
+                else
+                {
+                    tbc.SendTextMessageAsync(e.Message.Chat.Id, response.Result.Fulfillment.Speech);
+                    clientMsgLog += "Bot: " + response.Result.Fulfillment.Speech + "\r\n";
+                }
+            //}
         }
 
         private async void SendAudioFile(string url, long chatId, string title)
@@ -97,13 +105,14 @@ namespace BotTest1
 
         private string GetMood(AIResponse response)
         {
-            string mood = "GoodMood";
+            string mood = null;
 
             foreach(var param in response.Result.Parameters)
             {
                 if(!String.IsNullOrEmpty(param.Value as string))
                 {
                     mood = param.Key as string;
+                    break;
                 }
             }
             return mood;
